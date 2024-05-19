@@ -42,14 +42,14 @@ bool hashTest() {
     return compareVectors(streebog(message), expected);
 };
 
-bool nmacTest(vector<uint8_t> message, vector<uint8_t> key) {
+bool hmacTest(vector<uint8_t> message, vector<uint8_t> key) {
     static vector<uint8_t> expected = {
         0xb7, 0x69, 0x57, 0xe6, 0x31, 0xcc, 0x55, 0x13,
         0xe0, 0xe4, 0xaf, 0x9d, 0x53, 0x88, 0x92, 0xfc,
         0x0d, 0x46, 0x1b, 0x83, 0x01, 0xf6, 0x24, 0xc0,
         0xdf, 0xb5, 0x51, 0x91, 0xe8, 0x77, 0x52, 0xfa};
 
-    return compareVectors(NMAC(message, key), expected);
+    return compareVectors(hmac(message, key), expected);
 };
 
 bool hmacTest(vector<uint8_t> message, vector<uint8_t> key) {
@@ -82,7 +82,7 @@ bool test() {
         0x36, 0x35, 0x34, 0x33, 0x32, 0x31, 0x30, 0xFF};
 
     passed += hashTest();
-    passed += nmacTest(message, key);
+    passed += hmacTest(message, key);
     passed += hmacTest(message, key);
 
     return total == passed;
